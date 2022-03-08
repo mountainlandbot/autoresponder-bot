@@ -42,7 +42,8 @@ var AutojoinRoomsMixin = sdk.AutojoinRoomsMixin;
 var homeserverUrl = process.env.HOMESERVER_URL; // make sure to update this with your url
 var accessToken = process.env.ACCESS_TOKEN;
 var userId = process.env.USER_ID;
-var storage = new SimpleFsStorageProvider("bot.json");
+var botJsonPath = process.env.BOT_JSON_PATH || "bot.json";
+var storage = new SimpleFsStorageProvider(botJsonPath);
 var client = new MatrixClient(homeserverUrl, accessToken, storage);
 AutojoinRoomsMixin.setupOnClient(client);
 client.start().then(function () { return console.log("Client started!"); });
