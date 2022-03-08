@@ -3,8 +3,9 @@ const MatrixClient = sdk.MatrixClient;
 const SimpleFsStorageProvider = sdk.SimpleFsStorageProvider;
 const AutojoinRoomsMixin = sdk.AutojoinRoomsMixin;
 
-const homeserverUrl = "link_to_homeserver"; // make sure to update this with your url
-const accessToken = "access_token";
+const homeserverUrl = process.env.HOMESERVER_URL; // make sure to update this with your url
+const accessToken = process.env.ACCESS_TOKEN;
+const userId = process.env.USER_ID;
 
 const storage = new SimpleFsStorageProvider("bot.json");
 
@@ -16,7 +17,7 @@ client.start().then(() => console.log("Client started!"));
 client.on("room.message", async (roomId, event) => {
   if (!event["content"]) return;
   const sender = event["sender"];
-    if (sender === "@botuser:matrix.midhun.dev") return;
+    if (sender === userId) return;
   const body = event["content"]["body"];
   console.log(`${roomId}: ${sender} says '${body}`);
   await client.sendMessage(roomId, { msgtype: "m.notice", body: "Hello 👋", });
